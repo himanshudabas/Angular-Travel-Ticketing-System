@@ -7,7 +7,7 @@ import {NotificationType} from '../enum/notification-type.enum';
 @Injectable({
   providedIn: 'root'
 })
-export class UserAuthenticationGuard implements CanActivate {
+export class EmployeeAuthenticationGuard implements CanActivate {
 
   constructor(
     private authenticationService: AuthenticationService,
@@ -18,11 +18,11 @@ export class UserAuthenticationGuard implements CanActivate {
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): boolean {
-    return this.isUserLoggedIn();
+    return this.isEmployeeLoggedIn();
   }
 
-  private isUserLoggedIn(): boolean {
-    if (this.authenticationService.isUserLoggedIn()) {
+  private isEmployeeLoggedIn(): boolean {
+    if (this.authenticationService.isEmployeeLoggedIn()) {
       return true;
     }
     if (this.authenticationService.isAdminLoggedIn()) {

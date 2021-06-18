@@ -19,7 +19,7 @@ export class LoggedInAuthenticationGuard implements CanActivate {
   }
 
   private isLoggedIn(): boolean {
-    if (this.authenticationService.isUserLoggedIn()) {
+    if (this.authenticationService.isEmployeeLoggedIn()) {
       this.router.navigate(['/home']);
       return false;
     }

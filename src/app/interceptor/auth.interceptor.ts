@@ -14,9 +14,9 @@ export class AuthInterceptor implements HttpInterceptor {
   constructor(private authenticationService: AuthenticationService) {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    if (request.url.includes(`${this.authenticationService.host}/user/login`) ||
-        request.url.includes(`${this.authenticationService.host}/user/register`) ||
-        request.url.includes(`${this.authenticationService.host}/user/resetPassword`)) {
+    if (request.url.includes(`${this.authenticationService.host}/employee/login`) ||
+        request.url.includes(`${this.authenticationService.host}/employee/register`) ||
+        request.url.includes(`${this.authenticationService.host}/employee/resetPassword`)) {
       return next.handle(request);
     }
     this.authenticationService.loadToken();

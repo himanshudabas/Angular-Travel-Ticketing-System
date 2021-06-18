@@ -12,7 +12,7 @@ import {Subscription} from 'rxjs';
 })
 export class AppComponent implements OnInit, OnDestroy {
 
-  @Output() public loggedInUserType: string;
+  @Output() public loggedInEmployeeType: string;
   public isAdminLoginPage: boolean;
   private subscriptions: Subscription[];
 
@@ -27,18 +27,18 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   private updateLoginStatus(): void {
-    if (this.authenticationService.isUserLoggedIn()) {
-      this.loggedInUserType = 'USER';
+    if (this.authenticationService.isEmployeeLoggedIn()) {
+      this.loggedInEmployeeType = 'EMPLOYEE';
     } else if (this.authenticationService.isAdminLoggedIn()) {
-      this.loggedInUserType = 'ADMIN';
+      this.loggedInEmployeeType = 'ADMIN';
     } else {
-      this.loggedInUserType = 'GUEST';
+      this.loggedInEmployeeType = 'GUEST';
     }
   }
 
   public logout(): void {
     this.authenticationService.logOut();
-    this.loggedInUserType = 'GUEST';
+    this.loggedInEmployeeType = 'GUEST';
     this.notificationService.notify(NotificationType.SUCCESS, 'Successfully logged out');
     this.router.navigateByUrl('/login');
   }

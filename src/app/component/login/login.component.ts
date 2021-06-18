@@ -4,11 +4,11 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {GmailEmailValidator} from '../../validator/gmail-email.validator';
 import {AuthenticationService} from '../../service/authentication.service';
 import {NotificationService} from '../../service/notification.service';
-import {UserLoginDto} from '../../model/user-login.dto';
+import {EmployeeLoginDto} from '../../model/employee-login.dto';
 import {Subscription} from 'rxjs';
 import {HttpErrorResponse, HttpResponse} from '@angular/common/http';
 import {NotificationType} from '../../enum/notification-type.enum';
-import {User} from '../../model/User';
+import {Employee} from '../../model/Employee';
 
 @Component({
   selector: 'app-login',
@@ -19,7 +19,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   public isAdminLogin: boolean;
   private subscriptions: Subscription[] = [];
   public loginForm: FormGroup;
-  @Output('activate') public loginEvent: EventEmitter<User> = new EventEmitter<User>();
+  @Output('activate') public loginEvent: EventEmitter<Employee> = new EventEmitter<Employee>();
 
   constructor(
     private fb: FormBuilder,
@@ -41,11 +41,11 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   public onLogin(): void {
-    const userLoginDto: UserLoginDto = this.loginForm.value;
+    const employeeLoginDto: EmployeeLoginDto = this.loginForm.value;
     this.subscriptions.push(
-      this.authenticationService.login(userLoginDto).subscribe(
-        (res: HttpResponse<User>) => {
-          this.authenticationService.saveTokenAndUser(res);
+      this.authenticationService.login(employeeLoginDto).subscribe(
+        (res: HttpResponse<Employee>) => {
+          this.authenticationService.saveTokenAndEmployee(res);
           this.loginEvent.emit(res.body);
           this.sendNotification(NotificationType.SUCCESS, `Login successful`);
           if (res.body.isAdmin) {

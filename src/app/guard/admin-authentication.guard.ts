@@ -25,7 +25,7 @@ export class AdminAuthenticationGuard implements CanActivate {
     if (this.authenticationService.isAdminLoggedIn()) {
       return true;
     }
-    if (this.authenticationService.isUserLoggedIn()) {
+    if (this.authenticationService.isEmployeeLoggedIn()) {
       this.route.navigate(['/home']);
       return false;
     }

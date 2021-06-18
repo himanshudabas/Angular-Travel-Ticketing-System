@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {User} from '../../../../model/User';
+import {Employee} from '../../../../model/Employee';
 import {Router} from '@angular/router';
 import {NotificationService} from '../../../../service/notification.service';
 import {NotificationType} from '../../../../enum/notification-type.enum';
@@ -12,7 +12,7 @@ import {AuthenticationService} from '../../../../service/authentication.service'
 })
 export class ConfirmationComponent implements OnInit {
 
-  @Input() user: User;
+  @Input() employee: Employee;
   @Input() isEditPage: boolean;
   @Output() editDetailsEvent: EventEmitter<null> = new EventEmitter<null>();
 
@@ -31,7 +31,7 @@ export class ConfirmationComponent implements OnInit {
 
   editRegistration(): void {
     this.editDetailsEvent.emit();
-    this.router.navigateByUrl('/user/edit');
+    this.router.navigateByUrl('/employee/edit');
   }
 
   confirmRegistration(): void {

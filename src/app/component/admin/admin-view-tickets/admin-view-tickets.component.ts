@@ -13,8 +13,8 @@ import {
   TicketPriorityType,
   TicketSortType
 } from '../../../enum/ticket-enums';
-import { UserService } from '../../../service/user.service';
-import { User } from '../../../model/User';
+import { EmployeeService } from '../../../service/employee.service';
+import { Employee } from '../../../model/Employee';
 import { MatSelectChange } from '@angular/material/select';
 
 @Component({
@@ -34,7 +34,7 @@ export class AdminViewTicketsComponent implements OnInit, OnDestroy {
   public filterTypeList: { name: any; value: string }[];
   public sortByList: { name: any; value: string }[];
   public filterValueList: { name: any; value: string }[];
-  private globalUsersMap: Record<number, User> = {};
+  private globalEmployeesMap: Record<number, Employee> = {};
   private globalTickets: Array<Ticket>;
   // type of filter currently active
   public activeFilterType: TicketFilterType;
@@ -53,7 +53,7 @@ export class AdminViewTicketsComponent implements OnInit, OnDestroy {
   constructor(
     private ticketService: TicketService,
     private notificationService: NotificationService,
-    private userService: UserService,
+    private employeeService: EmployeeService,
   ) { }
 
 
@@ -64,7 +64,7 @@ export class AdminViewTicketsComponent implements OnInit, OnDestroy {
   }
 
   // fetch all tickets from the server
-  // then fetch all users details
+  // then fetch all employees details
   private initAllTicketsData(): void {
     this.subscriptions.push(
       this.ticketService.getAllTickets()
@@ -73,7 +73,7 @@ export class AdminViewTicketsComponent implements OnInit, OnDestroy {
             this.globalTickets = res;
             this.totalTickets = this.globalTickets.length;
             this.globalTickets.forEach(tkt => TicketService.enumToString(tkt));
-            this.initAllUsersData();
+            this.initAllEmployeesData();
           },
           error => {
             this.notificationService.notify(NotificationType.ERROR, error.error.message);
@@ -82,13 +82,13 @@ export class AdminViewTicketsComponent implements OnInit, OnDestroy {
     );
   }
 
-  // fetch all users from the server and filter those who owns some ticket
-  private initAllUsersData(): void {
+  // fetch all employees from the server and filter those who owns some ticket
+  private initAllEmployeesData(): void {
     this.subscriptions.push(
-      this.userService.getAllUsers()
+      this.employeeService.getAllEmployees()
         .subscribe(
-          (res: Record<number, User>) => {
-            this.storeValidUsersFromAllUsers(res);
+          (res: Record<number, Employee>) => {
+            this.storeValidEmployeesFromAllEmployees(res);
             this.updateVisibleTicketDetails();
           },
           error => {
@@ -111,7 +111,7 @@ export class AdminViewTicketsComponent implements OnInit, OnDestroy {
     this.sliceFilteredTicketsForPagination();
   }
 
-  // this will first filter the tickets based on user selection and then sort them for pagination
+  // this will first filter the tickets based on employee selection and then sort them for pagination
   private filterThenSortTickets(): void {
     this.filterTickets();
     this.sortTickets();
@@ -124,7 +124,7 @@ export class AdminViewTicketsComponent implements OnInit, OnDestroy {
         // 1st we filter all the tickets whose owner has the specified business unit
         this.allFilteredTickets = this.globalTickets.filter(
           tkt => {
-            if (this.globalUsersMap[tkt.userId].businessUnit === this.activeFilterValue) {
+            if (this.globalEmployeesMap[tkt.employeeId].businessUnit === this.activeFilterValue) {
               return true;
             }
           }
@@ -133,7 +133,7 @@ export class AdminViewTicketsComponent implements OnInit, OnDestroy {
       case TicketFilterType.PERSON:
         this.allFilteredTickets = this.globalTickets.filter(
           tkt => {
-            if (tkt.userId.toString() === this.activeFilterValue) {
+            if (tkt.employeeId.toString() === this.activeFilterValue) {
               return true;
             }
           }
@@ -194,19 +194,19 @@ export class AdminViewTicketsComponent implements OnInit, OnDestroy {
     this.visibleTicketsProgressList = this.visibleTickets.map(x => TicketService.getProgressValueFromStatus(x.ticketStatus));
   }
 
-  // from the list of all the users that the server sends
+  // from the list of all the employees that the server sends
   // store only those which have created some ticket
-  private storeValidUsersFromAllUsers(res: Record<number, User>): void {
+  private storeValidEmployeesFromAllEmployees(res: Record<number, Employee>): void {
     this.globalTickets.forEach(
       tkt => {
-        if (res[tkt.userId] !== undefined) {
-          this.globalUsersMap[tkt.userId] = res[tkt.userId];
+        if (res[tkt.employeeId] !== undefined) {
+          this.globalEmployeesMap[tkt.employeeId] = res[tkt.employeeId];
         }
       }
     );
   }
 
-  // called when user selects the sort type
+  // called when employee selects the sort type
   public onFilterTypeChange($event: MatSelectChange): void {
     this.populateFilterValueList();
     this.isFilterValueVisible = !!$event.value;
@@ -217,7 +217,7 @@ export class AdminViewTicketsComponent implements OnInit, OnDestroy {
     }
   }
 
-  // called when user selects some filter value
+  // called when employee selects some filter value
   public onFilterValueChange(): void {
     // this.activeFilterValue = $event.target;
     this.sortTickets();
@@ -226,7 +226,7 @@ export class AdminViewTicketsComponent implements OnInit, OnDestroy {
     this.reload();
   }
 
-  // called when user selects the sort type
+  // called when employee selects the sort type
   public onSortChange(): void {
     // this.activeSortType = $event.target;
     this.sortTickets();
@@ -272,14 +272,14 @@ export class AdminViewTicketsComponent implements OnInit, OnDestroy {
   private populateFilterValueList(): void {
     switch (TicketFilterType[this.activeFilterType]) {
       case TicketFilterType.PERSON:
-        const allUsers = [];
-        for (const [userid, value] of Object.entries(this.globalUsersMap)) {
-          allUsers.push({
-            value: userid,
+        const allEmployees = [];
+        for (const [employeeId, value] of Object.entries(this.globalEmployeesMap)) {
+          allEmployees.push({
+            value: employeeId,
             name: (`${value.firstName} ${value.lastName}`)
           });
         }
-        this.filterValueList = allUsers;
+        this.filterValueList = allEmployees;
         break;
       case TicketFilterType.PRIORITY:
         this.filterValueList = Object.keys(TicketPriorityType).map(
@@ -292,7 +292,7 @@ export class AdminViewTicketsComponent implements OnInit, OnDestroy {
         );
         break;
       case TicketFilterType.BUSINESS_UNIT:
-        this.filterValueList = Object.keys(this.groupBy(Object.values(this.globalUsersMap), 'businessUnit'))
+        this.filterValueList = Object.keys(this.groupBy(Object.values(this.globalEmployeesMap), 'businessUnit'))
           .map(key => {
             return {
               name: key,

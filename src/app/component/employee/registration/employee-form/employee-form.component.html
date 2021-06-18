@@ -4,7 +4,7 @@
 
   <div class="card">
     <div class="card-body">
-      <form [formGroup]="userDetailsForm" (ngSubmit)="submitDetails()">
+      <form [formGroup]="employeeDetailsForm" (ngSubmit)="submitDetails()">
         <div class="form-group">
           <div class="row">
             <label class="col-3" for="firstName">First Name</label>
@@ -82,7 +82,7 @@
               <small class="offset-3 text-danger" [class.d-none]="!country.invalid || !country.touched" >Country is required</small>
             </div>
           </div>
-          <button [disabled]="!userDetailsForm.valid" class="btn btn-ascent" type="submit">{{ isEditPage ? "Confirm Edit": "Register" }}</button>
+          <button [disabled]="!employeeDetailsForm.valid" class="btn btn-ascent" type="submit">{{ isEditPage ? "Confirm Edit": "Register" }}</button>
 
         </div>
       </form>

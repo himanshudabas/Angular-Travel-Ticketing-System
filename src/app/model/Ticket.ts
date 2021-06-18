@@ -20,7 +20,7 @@ export class Ticket {
   public ticketStatus: string;
   public resolveInfo: ResolveInfo;
   public userName: string;
-  public userId: number;
+  public employeeId: number;
 
   constructor() {
     this.id = '';
@@ -38,7 +38,7 @@ export class Ticket {
     this.moreDetails = '';
     this.resolveInfo = new ResolveInfo();
     this.userName = '';
-    this.userId = 0;
+    this.employeeId = 0;
   }
 
   public getPriorityEnumValue(t: string): string {

@@ -5,8 +5,8 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-<!--      when a user is logged in-->
-      <ng-template [ngIf]="loggedInUserType === 'USER'">
+<!--      when an aemployee is logged in-->
+      <ng-template [ngIf]="loggedInEmployeeType === 'EMPLOYEE'">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" [routerLink]="['/home']">Home</a>
@@ -26,7 +26,7 @@
               My Account
             </a>
             <ul class="dropdown-menu " style="right: 0; left: auto;" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" [routerLink]="['/user/edit']">Edit Profile</a></li>
+              <li><a class="dropdown-item" [routerLink]="['/employee/edit']">Edit Profile</a></li>
               <li><hr class="dropdown-divider"></li>
               <li><a class="dropdown-item" (click)="logout()">Logout</a></li>
             </ul>
@@ -36,7 +36,7 @@
       </ng-template>
 
 <!--      when an admin is logged in-->
-      <ng-template [ngIf]="loggedInUserType === 'ADMIN'">
+      <ng-template [ngIf]="loggedInEmployeeType === 'ADMIN'">
         <ul  class="navbar-nav me-auto mb-2 mb-lg-0">
           <li class="nav-item">
             <a class="nav-link" [routerLink]="['/admin/tickets']">All Tickets</a>
@@ -56,7 +56,7 @@
         </div>
       </ng-template>
 
-      <ng-template [ngIf]="loggedInUserType === 'GUEST'">
+      <ng-template [ngIf]="loggedInEmployeeType === 'GUEST'">
         <ul  class="navbar-nav me-auto mb-2 mb-lg-0">
 
         </ul>

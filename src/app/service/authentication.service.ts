@@ -2,9 +2,9 @@ import { Injectable } from '@angular/core';
 import {environment} from '../../environments/environment';
 import {HttpClient, HttpResponse} from '@angular/common/http';
 import {BehaviorSubject, Observable} from 'rxjs';
-import {User} from '../model/User';
+import {Employee} from '../model/Employee';
 import {JwtHelperService} from '@auth0/angular-jwt';
-import {UserLoginDto} from '../model/user-login.dto';
+import {EmployeeLoginDto} from '../model/employee-login.dto';
 import {HeaderType} from '../enum/header-type.enum';
 
 @Injectable({
@@ -26,28 +26,28 @@ export class AuthenticationService {
     private http: HttpClient,
   ) { }
 
-  public saveTokenAndUser(response: HttpResponse<User>): void {
+  public saveTokenAndEmployee(response: HttpResponse<Employee>): void {
     const token = response.headers.get(HeaderType.JWT_TOKEN);
     this.saveToken(token);
-    this.addUserToLocalCache(response.body);
+    this.addEmployeeToLocalCache(response.body);
   }
 
-  public login(userLoginDto: UserLoginDto): Observable<HttpResponse<User>> {
-    return this.http.post<User>(`${this.host}/user/login`, userLoginDto, {observe: 'response'});
+  public login(employeeLoginDto: EmployeeLoginDto): Observable<HttpResponse<Employee>> {
+    return this.http.post<Employee>(`${this.host}/employee/login`, employeeLoginDto, {observe: 'response'});
   }
 
-  public register(user: User): Observable<HttpResponse<User>> {
+  public register(employee: Employee): Observable<HttpResponse<Employee>> {
     // this is required because currently we assume that username = email
-    user.username = user.email;
-    return this.http.post<User>(`${this.host}/user/register`, user, {observe: 'response'});
+    employee.username = employee.email;
+    return this.http.post<Employee>(`${this.host}/employee/register`, employee, {observe: 'response'});
   }
 
   public logOut(): void {
     this.token = null;
     this.loggedInUsername = null;
-    localStorage.removeItem('user');
+    localStorage.removeItem('employee');
     localStorage.removeItem('token');
-    localStorage.removeItem('users');
+    localStorage.removeItem('employees');
   }
 
   public saveToken(token: string): void {
@@ -55,12 +55,12 @@ export class AuthenticationService {
     localStorage.setItem('token', token);
   }
 
-  public addUserToLocalCache(user: User): void {
-    localStorage.setItem('user', JSON.stringify(user));
+  public addEmployeeToLocalCache(employee: Employee): void {
+    localStorage.setItem('employee', JSON.stringify(employee));
   }
 
-  public getUserFromLocalCache(): User {
-    return JSON.parse(localStorage.getItem('user'));
+  public getEmployeeFromLocalCache(): Employee {
+    return JSON.parse(localStorage.getItem('employee'));
   }
 
   public loadToken(): void {
@@ -85,12 +85,12 @@ export class AuthenticationService {
     return false;
   }
 
-  public isUserLoggedIn(): boolean {
-    return this.isLoggedIn() && !this.getUserFromLocalCache().isAdmin;
+  public isEmployeeLoggedIn(): boolean {
+    return this.isLoggedIn() && !this.getEmployeeFromLocalCache().isAdmin;
   }
 
   public isAdminLoggedIn(): boolean {
-    return this.isLoggedIn() && this.getUserFromLocalCache().isAdmin;
+    return this.isLoggedIn() && this.getEmployeeFromLocalCache().isAdmin;
   }
 
 

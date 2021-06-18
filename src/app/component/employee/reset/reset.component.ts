@@ -5,10 +5,10 @@ import {AuthenticationService} from '../../../service/authentication.service';
 import {NotificationService} from '../../../service/notification.service';
 import {GmailEmailValidator} from '../../../validator/gmail-email.validator';
 import {Subscription} from 'rxjs';
-import {UserLoginDto} from '../../../model/user-login.dto';
+import {EmployeeLoginDto} from '../../../model/employee-login.dto';
 import {HttpErrorResponse} from '@angular/common/http';
 import {NotificationType} from '../../../enum/notification-type.enum';
-import {UserService} from '../../../service/user.service';
+import {EmployeeService} from '../../../service/employee.service';
 import {CustomHttpResponse} from '../../../model/custom-http-response';
 
 @Component({
@@ -24,7 +24,7 @@ export class ResetComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private router: Router,
     private authenticationService: AuthenticationService,
-    private userService: UserService,
+    private employeeService: EmployeeService,
     private notificationService: NotificationService,
   ) { }
 
@@ -44,9 +44,9 @@ export class ResetComponent implements OnInit, OnDestroy {
   }
 
   public reset(): void {
-    const userLoginDto: UserLoginDto = this.resetForm.value;
+    const employeeLoginDto: EmployeeLoginDto = this.resetForm.value;
     this.subscriptions.push(
-      this.userService.resetPassword(userLoginDto.username).subscribe(
+      this.employeeService.resetPassword(employeeLoginDto.username).subscribe(
         (response: CustomHttpResponse) => {
           this.router.navigateByUrl('/login');
           this.sendNotification(NotificationType.SUCCESS,

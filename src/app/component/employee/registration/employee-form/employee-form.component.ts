@@ -1,46 +1,46 @@
 import {Component, EventEmitter, Input, OnChanges, OnDestroy, OnInit, Output, SimpleChanges} from '@angular/core';
 import {FormBuilder, Validators} from '@angular/forms';
-import {User} from '../../../../model/User';
+import {Employee} from '../../../../model/Employee';
 import {GmailEmailValidator} from '../../../../validator/gmail-email.validator';
 import {SelectFieldValidator} from '../../../../validator/select-field.validator';
 import {AuthenticationService} from '../../../../service/authentication.service';
-import {UserService} from '../../../../service/user.service';
+import {EmployeeService} from '../../../../service/employee.service';
 import {Subscription} from 'rxjs';
 import {NotificationService} from '../../../../service/notification.service';
 import {NotificationType} from '../../../../enum/notification-type.enum';
 
 @Component({
   selector: 'app-register',
-  templateUrl: './user-form.component.html',
-  styleUrls: ['./user-form.component.css']
+  templateUrl: './employee-form.component.html',
+  styleUrls: ['./employee-form.component.css']
 })
-export class UserFormComponent implements OnInit, OnDestroy, OnChanges {
+export class EmployeeFormComponent implements OnInit, OnDestroy, OnChanges {
 
-  @Input() user: User;
+  @Input() employee: Employee;
   @Input() isEditPage: boolean;
-  userDetailsForm: any;
+  employeeDetailsForm: any;
   allCountries: string[];
   allStates: string[];
   private subscriptions: Subscription[] = [];
-  @Output() submitEvent: EventEmitter<User> = new EventEmitter<User>();
+  @Output() submitEvent: EventEmitter<Employee> = new EventEmitter<Employee>();
 
   constructor(
     private fb: FormBuilder,
     private authenticationService: AuthenticationService,
-    private userService: UserService,
+    private employeeService: EmployeeService,
     private notificationService: NotificationService,
   ) { }
 
   ngOnInit(): void {
     this.allCountries = ['India', 'USA'];
     this.allStates = ['Uttar Pradesh', 'Delhi', 'Haryana'];
-    if (!this.userDetailsForm) {
-      this.initUserDetailsForm();
+    if (!this.employeeDetailsForm) {
+      this.initEmployeeDetailsForm();
     }
   }
 
-  public initUserDetailsForm(): void {
-    this.userDetailsForm = this.fb.group({
+  public initEmployeeDetailsForm(): void {
+    this.employeeDetailsForm = this.fb.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
       businessUnit: ['', Validators.required],
@@ -59,9 +59,9 @@ export class UserFormComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   submitDetails(): void {
-    if (this.isEditPage) { // edit existing user details
+    if (this.isEditPage) { // edit existing employee details
       this.subscriptions.push(
-        this.userService.updateUser(this.userDetailsForm.value)
+        this.employeeService.updateEmployee(this.employeeDetailsForm.value)
           .subscribe(
             res => this.submitEvent.emit(res),
             error => this.notificationService.notify(NotificationType.ERROR, error.error.message)
@@ -69,10 +69,10 @@ export class UserFormComponent implements OnInit, OnDestroy, OnChanges {
       );
     } else { // do new registration
       this.subscriptions.push(
-        this.authenticationService.register(this.userDetailsForm.value)
+        this.authenticationService.register(this.employeeDetailsForm.value)
           .subscribe(
             res => {
-              this.authenticationService.saveTokenAndUser(res);
+              this.authenticationService.saveTokenAndEmployee(res);
               this.submitEvent.emit(res.body);
             },
               error => this.notificationService.notify(NotificationType.ERROR, error.error.message)
@@ -82,49 +82,49 @@ export class UserFormComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.user) {
-      if (!this.userDetailsForm) {
-        this.initUserDetailsForm();
+    if (changes.employee) {
+      if (!this.employeeDetailsForm) {
+        this.initEmployeeDetailsForm();
       }
-      this.userDetailsForm.patchValue(this.user);
+      this.employeeDetailsForm.patchValue(this.employee);
     }
   }
 
   get firstName(): any {
-    return this.userDetailsForm.get('firstName');
+    return this.employeeDetailsForm.get('firstName');
   }
   get lastName(): any {
-    return this.userDetailsForm.get('lastName');
+    return this.employeeDetailsForm.get('lastName');
   }
   get businessUnit(): any {
-    return this.userDetailsForm.get('businessUnit');
+    return this.employeeDetailsForm.get('businessUnit');
   }
   get title(): any {
-    return this.userDetailsForm.get('title');
+    return this.employeeDetailsForm.get('title');
   }
   get telephone(): any {
-    return this.userDetailsForm.get('telephone');
+    return this.employeeDetailsForm.get('telephone');
   }
   get email(): any {
-    return this.userDetailsForm.get('email');
+    return this.employeeDetailsForm.get('email');
   }
   get address1(): any {
-    return this.userDetailsForm.get('address.address1');
+    return this.employeeDetailsForm.get('address.address1');
   }
   get address2(): any {
-    return this.userDetailsForm.get('address.address2');
+    return this.employeeDetailsForm.get('address.address2');
   }
   get city(): any {
-    return this.userDetailsForm.get('address.city');
+    return this.employeeDetailsForm.get('address.city');
   }
   get state(): any {
-    return this.userDetailsForm.get('address.state');
+    return this.employeeDetailsForm.get('address.state');
   }
   get zipCode(): any {
-    return this.userDetailsForm.get('address.zipCode');
+    return this.employeeDetailsForm.get('address.zipCode');
   }
   get country(): any {
-    return this.userDetailsForm.get('address.country');
+    return this.employeeDetailsForm.get('address.country');
   }
 
   ngOnDestroy(): void {

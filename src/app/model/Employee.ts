@@ -1,6 +1,6 @@
 import {Address} from './Address';
 
-export class User {
+export class Employee {
 
   public username: string;
   public email: string;
