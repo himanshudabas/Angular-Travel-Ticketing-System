@@ -1,0 +1,35 @@
+
+table tbody tr td:first-child {
+  color: #bb86fc;
+  text-align:right;
+}
+table tbody tr td:not(:first-child) {
+  width: 100%;
+}
+
+td {
+  color: white;
+  width:auto;
+}
+
+table:not(:last-child){
+  width:100%;
+  white-space: nowrap;
+}
+
+table tbody tr td:last-child {
+  white-space: normal;
+}
+
+.ascent-color {
+  color: #724293;
+}
+
+.custom-link {
+  color: #724293;
+  cursor: pointer;
+}
+
+.row div:last-child {
+  align-self: baseline;
+}

@@ -1,0 +1,138 @@
+
+
+.more-details {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  line-height: 21px;
+  max-height: 63px;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+
+}
+
+
+.card-subtitle, .card-title {
+  font-weight: 400;
+}
+.card-title {
+  font-size: 1.25rem;
+  color: #bb86fc;
+  font-weight: bold;
+
+}
+
+div .card-header {
+  background-color: rgba(0,0,0,.09);
+}
+
+.container .row h1.col {
+  color: #bb86fc;
+}
+
+.completed {
+  background-color: #3b893b;
+}
+
+.inprocess {
+  background-color: #ffc107;
+}
+
+.submitted {
+  background-color: grey;
+}
+
+.resubmitted {
+  background-color: #724293;
+}
+
+.rejected {
+  background-color: #DC3545;
+}
+
+ul.list-group.list-group-flush {
+  margin-bottom: 1rem;
+}
+
+
+.list-group-item {
+  padding: 0.5rem 0;
+  background-color: #363636;
+}
+
+.card .card-body ul li.list-group-item {
+  background-color: #1D1D1D;
+}
+
+.card .card-body button.btn {
+  margin: 0 1rem 0 0;
+}
+
+.card {
+  margin-bottom: 24px;
+  box-shadow: 0 0 0.875rem 0 rgba(33,37,41,.05);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: #363636;
+  background-clip: initial;
+  border: 0 solid transparent;
+  border-radius: .25rem;
+}
+.card-body {
+  flex: 1 1 auto;
+  padding: 1.25rem;
+}
+
+.card .card-body table {
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 1rem;
+}
+
+.card .card-body table td:first-child {
+  color: #DAB2FE ;
+  font-weight: bold;
+}
+
+.card .card-body table td {
+  padding: 0.25rem;
+}
+
+.card .card-body table tr {
+  padding-bottom: 0.25rem;
+  border: 1px #DAB2FE solid;
+}
+.card-header:first-child {
+  border-radius: .25rem .25rem 0 0;
+}
+.card-header {
+  border-bottom-width: 1px;
+}
+
+.card-header .row div {
+  margin-right: 12px;
+}
+.pb-0 {
+  padding-bottom: 0!important;
+}
+.card-header {
+  padding: 1rem 1.25rem;
+  margin-bottom: 0;
+  border-bottom: 0 solid transparent;
+}
+
+
+/* PAGINATOR */
+mat-paginator {
+  background-color: #363636!important;
+  border-radius: 0.25rem;
+}
+
+.mat-paginator, .mat-paginator-page-size .mat-select-trigger {
+  color: #bb86fc;
+}
+/* PAGINATOR END */
+

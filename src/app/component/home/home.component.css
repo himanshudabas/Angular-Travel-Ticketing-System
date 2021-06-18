@@ -1,0 +1,44 @@
+
+.my-dest {
+  color: #bb86fc;
+  font-size: 24px;
+}
+
+.row input, .row select {
+  margin: 0!important;
+}
+
+#container {
+  width: 640px; /* Can be in percentage also. */
+  height: auto;
+  margin: 0 auto;
+  padding: 10px;
+  position: relative;
+}
+
+::ng-deep.autocomplete-container .input-container input {
+  background-color: #363636!important;
+  color: white!important;
+  border-radius: 0.25rem!important;
+}
+
+::ng-deep.autocomplete-container .input-container input:focus {
+  background-color: #1D1D1D!important;
+  color: white!important;
+  border-color: #DAB2FE!important;
+  outline: 0!important;
+  box-shadow: 0 0 0 0.25rem rgb(218 178 254 / 25%) !important;
+}
+
+::ng-deep.autocomplete-container .suggestions-container ul li a {
+  background-color: #363636!important;
+  color: white!important;
+}
+
+::ng-deep.autocomplete-container .suggestions-container ul li a:hover {
+  color: white!important;
+  background-color: #454545!important;
+}
+::ng-deep.autocomplete-container .not-found {
+  background-color: #363636!important;
+}

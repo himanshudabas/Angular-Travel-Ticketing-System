@@ -1,0 +1,41 @@
+
+.card form div label {
+  white-space: nowrap;
+}
+.row input, .row select {
+  margin: 0.5rem 0;
+}
+
+table tbody tr td:first-child {
+  color: #bb86fc;
+  text-align:right;
+}
+table tbody tr td:not(:first-child) {
+  width: 100%;
+}
+
+form textarea.form-control {
+  height: 9rem!important;
+}
+
+td {
+  color: white;
+  width:auto;
+}
+
+table {
+  width:100%;
+  white-space: nowrap;
+}
+
+table tbody tr td:last-child {
+  white-space: normal;
+}
+
+.ascent-color {
+  color: #724293;
+}
+
+.row div:last-child {
+  align-self: baseline;
+}

@@ -1,0 +1,123 @@
+<div *ngIf="!showConfirmation">
+<div class="horizontal-rule">
+  <h2>{{ isEditPage ? "Edit" : "New" }} Ticket</h2>
+</div>
+
+<div *ngIf="ticketForm" class="card">
+  <div class="card-body">
+    <form [formGroup]="ticketForm" (ngSubmit)="submitTicket()">
+      <div class="form-group">
+        <div class="row">
+          <label class="col-3" for="ticket-type">Request Type</label>
+          <select [class.is-invalid]="type.invalid && type.touched" formControlName="type" class="col form-select" id="ticket-type">
+            <option *ngFor="let st of allTicketTypes" value="{{st}}">{{st}}</option>
+          </select>
+          <small class="offset-3 text-danger" [class.d-none]="!type.invalid || !type.touched" >This field is required</small>
+        </div>
+        <div class="row">
+          <label class="col-3" for="priority">Priority</label>
+          <select [class.is-invalid]="priority.invalid && priority.touched" formControlName="priority" class="col form-select" id="priority">
+            <option *ngFor="let st of allPriorityTypes" value="{{st}}">{{st}}</option>
+          </select>
+          <small class="offset-3 text-danger" [class.d-none]="!priority.invalid || !priority.touched" >This field is required</small>
+        </div>
+        <div class="row">
+          <label class="col-3" for="travelTo">Travel To</label>
+          <select [class.is-invalid]="travelTo.invalid && travelTo.touched" formControlName="travelTo" class="col form-select" id="travelTo">
+            <option selected="" value="dummy">Select State</option>
+            <option *ngFor="let st of allStates" value="{{st}}">{{st}}</option>
+          </select>
+          <small class="offset-3 text-danger" [class.d-none]="!travelTo.invalid || !travelTo.touched" >This field is required</small>
+        </div>
+        <div class="row">
+          <label class="col-3" for="travelFrom">Travel From</label>
+          <select [class.is-invalid]="travelFrom.invalid && travelFrom.touched" formControlName="travelFrom" class="col form-select" id="travelFrom" name="country">
+            <option selected="" value="dummy">Select State</option>
+            <option *ngFor="let st of allStates" value="{{st}}">{{st}}</option>
+          </select>
+          <small class="offset-3 text-danger" [class.d-none]="!travelFrom.invalid || !travelFrom.touched" >This field is required</small>
+        </div>
+        <div class="row">
+          <label class="col-3" for="startDate">Travel Start</label>
+          <mat-form-field [class.is-invalid]="startDate.invalid && startDate.touched" class="col" id="startDate">
+            <input formControlName="startDate" matInput [matDatepicker]="picker" placeholder="Choose a date">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+          <small class="offset-3 text-danger" [class.d-none]="!startDate.invalid || !startDate.touched" >This field is required</small>
+<!--          <input   class="col form-control" id="startDate" name="startDate" type="text" placeholder="">-->
+        </div>
+        <div class="row">
+          <label class="col-3" for="endDate">Travel End</label>
+          <mat-form-field [class.is-invalid]="endDate.invalid && endDate.touched" class="col" id="endDate">
+            <input formControlName="startDate" matInput [matDatepicker]="picker2" placeholder="Choose a date">
+            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+            <mat-datepicker #picker2></mat-datepicker>
+          </mat-form-field>
+
+          <small class="offset-3 text-danger" [class.d-none]="!endDate.invalid || !endDate.touched" >This field is required</small>
+        </div>
+        <div class="row">
+          <label class="col-3" for="passportNumber">Passport Number</label>
+          <input [class.is-invalid]="passportNumber.invalid && passportNumber.touched" formControlName="passportNumber" class="col form-control" id="passportNumber" name="passportNumber" type="text" placeholder="">
+          <div style="padding-left: 0; padding-right: 0;" *ngIf="passportNumber.invalid && passportNumber.touched">
+            <small class="offset-3 text-danger" *ngIf="passportNumber.errors?.required" >This field is required</small>
+            <small class="offset-3 text-danger" *ngIf="passportNumber.errors?.maxlength" >Should be less than 25 characters</small>
+          </div>
+        </div>
+        <div class="row">
+          <label class="col-3" for="projectName">Project Name</label>
+          <input [class.is-invalid]="projectName.invalid && projectName.touched" formControlName="projectName" class="col form-control" id="projectName" name="projectName" type="text" placeholder="">
+          <div style="padding-left: 0; padding-right: 0;" *ngIf="projectName.invalid && projectName.touched">
+            <small class="offset-3 text-danger" *ngIf="projectName.errors?.required" >This field is required</small>
+            <small class="offset-3 text-danger" *ngIf="projectName.errors?.maxlength" >Should be less than 100 characters</small>
+          </div>
+        </div>
+        <div class="row">
+          <label class="col-3" for="borneBy">Expense Borne By</label>
+          <div class="col" id="borneBy">
+            <label class="md-check">
+              <input class="me-0 ms-0"  type="radio"  value="Company" formControlName="borneBy">
+              Company
+            </label>
+            <label class="md-check">
+              <input class="me-0" type="radio" value="Client" formControlName="borneBy">
+              Client
+            </label>
+          </div>
+          <small class="offset-3 text-danger" [class.d-none]="!borneBy.invalid || !borneBy.touched" >This field is required</small>
+        </div>
+        <div class="row">
+          <label class="col-3" for="approverName">Travel Approver Name</label>
+          <input [class.is-invalid]="approverName.invalid && approverName.touched" formControlName="approverName" class="col form-control" id="approverName" name="approverName" type="text" placeholder="">
+          <small class="offset-3 text-danger" [class.d-none]="!approverName.invalid || !approverName.touched" >Should be less than 100 characters</small>
+        </div>
+        <div class="row">
+          <label class="col-3" for="expectedDuration">Expected Travel Duration</label>
+          <input [class.is-invalid]="expectedDuration.invalid && expectedDuration.touched" formControlName="expectedDuration" class="col form-control" id="expectedDuration" name="expectedDuration" type="text" placeholder="">
+          <small class="offset-3 text-danger" [class.d-none]="!expectedDuration.invalid || !expectedDuration.touched" >Should be less than 100 characters</small>
+        </div>
+        <div class="row">
+          <label class="col-3" for="maxAllowedAmount">Max Allowed Amount</label>
+          <input [class.is-invalid]="maxAllowedAmount.invalid && maxAllowedAmount.touched" formControlName="maxAllowedAmount" class="col form-control" id="maxAllowedAmount" name="maxAllowedAmount" type="text" placeholder="">
+          <small class="offset-3 text-danger" [class.d-none]="!maxAllowedAmount.invalid || !maxAllowedAmount.touched" >Should be less than 500 characters</small>
+        </div>
+        <div class="row">
+          <label class="col-3" for="moreDetails">More Details</label>
+          <input [class.is-invalid]="moreDetails.invalid && moreDetails.touched" formControlName="moreDetails" class="col form-control" id="moreDetails" name="moreDetails" type="text" placeholder="">
+          <div style="padding-left: 0; padding-right: 0;" *ngIf="moreDetails.invalid && moreDetails.touched">
+            <small class="offset-3 text-danger" *ngIf="moreDetails.errors?.required" >This field is required</small>
+            <small class="offset-3 text-danger" *ngIf="moreDetails.errors?.maxlength" >Should be less than 1000 characters</small>
+          </div>
+        </div>
+
+        <button [disabled]="!ticketForm.valid" class="btn me-3 btn-ascent" type="submit">Submit</button>
+        <button [routerLink]="['/tickets']" class="btn btn-outline-danger" >Cancel</button>
+
+      </div>
+    </form>
+  </div>
+</div>
+</div>
+
+<app-ticket-confirmation (editTicketEvent)="editTicketEvent()" [ticket]="ticket" [isEditPage]="isEditPage" *ngIf="showConfirmation"></app-ticket-confirmation>

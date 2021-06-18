@@ -1,0 +1,90 @@
+  <div class="horizontal-rule">
+    <h2>{{ isEditPage ? "Edit Details" : "Registration" }}</h2>
+  </div>
+
+  <div class="card">
+    <div class="card-body">
+      <form [formGroup]="userDetailsForm" (ngSubmit)="submitDetails()">
+        <div class="form-group">
+          <div class="row">
+            <label class="col-3" for="firstName">First Name</label>
+            <input [class.is-invalid]="firstName.invalid && firstName.touched" formControlName="firstName" class="col form-control" id="firstName" name="firstName" type="text" placeholder="">
+            <small class="offset-3 text-danger" [class.d-none]="!firstName.invalid || !firstName.touched" >First Name is required</small>
+          </div>
+          <div class="row">
+            <label class="col-3" for="lastName">Last Name</label>
+            <input [class.is-invalid]="lastName.invalid && lastName.touched" formControlName="lastName" class="col form-control" id="lastName" name="lastName" type="text" placeholder="">
+            <small class="offset-3 text-danger" [class.d-none]="!lastName.invalid || !lastName.touched" >Last Name is required</small>
+          </div>
+          <div class="row">
+            <label class="col-3" for="businessUnit">Business Unit</label>
+            <input [class.is-invalid]="businessUnit.invalid && businessUnit.touched" formControlName="businessUnit" class="col form-control" id="businessUnit" name="businessUnit" type="text" placeholder="">
+            <small class="offset-3 text-danger" [class.d-none]="!businessUnit.invalid || !businessUnit.touched" >Business Unit is required</small>
+          </div>
+          <div class="row">
+            <label class="col-3" for="title">Title</label>
+            <input [class.is-invalid]="title.invalid && title.touched" formControlName="title" class="col form-control" id="title" name="title" type="text" placeholder="">
+            <small class="offset-3 text-danger" [class.d-none]="!title.invalid || !title.touched" >Title is required</small>
+          </div>
+          <div class="row">
+            <label class="col-3" for="email">Email</label>
+            <input [class.is-invalid]="email.invalid && email.touched" formControlName="email" class="col form-control" id="email" name="email" type="email" placeholder="">
+            <div style="padding-left: 0; padding-right: 0;" *ngIf="email.invalid && email.touched">
+              <small class="offset-3 text-danger" *ngIf="email.errors?.required" >Email is required</small>
+              <small class="offset-3 text-danger" *ngIf="email.errors?.email; else gmailEmailError" >Email is invalid</small>
+              <ng-template #gmailEmailError>
+                <small class="offset-3 text-danger" *ngIf="email.errors?.gmailEmail" >Only Gmail email addresses are allowed</small>
+              </ng-template>
+            </div>
+          </div>
+          <div class="row">
+            <label class="col-3" for="telephone">Telephone</label>
+            <input [class.is-invalid]="telephone.invalid && telephone.touched" formControlName="telephone" class="col form-control" id="telephone" name="telephone" type="text" placeholder="">
+            <div style="padding-left: 0; padding-right: 0;" *ngIf="telephone.invalid && telephone.touched">
+              <small class="offset-3 text-danger" *ngIf="telephone.errors?.required" >Telephone is required</small>
+              <small class="offset-3 text-danger" *ngIf="telephone.errors?.maxlength" >Telephone length cannot be more than 15</small>
+            </div>
+          </div>
+          <div formGroupName="address">
+            <div class="row">
+              <label class="col-3" for="address1">Address 1</label>
+              <input [class.is-invalid]="address1.invalid && address1.touched" formControlName="address1" class="col form-control" id="address1" name="address1" type="text" placeholder="">
+              <small class="offset-3 text-danger" [class.d-none]="!address1.invalid || !address1.touched" >Address1 is required</small>
+            </div>
+            <div class="row">
+              <label class="col-3" for="address2">Address 2</label>
+              <input [class.is-invalid]="address2.invalid && address2.touched" formControlName="address2" class="col form-control" id="address2" name="address2" type="text" placeholder="">
+            </div>
+            <div class="row">
+              <label class="col-3" for="city">City</label>
+              <input [class.is-invalid]="city.invalid && city.touched" formControlName="city" class="col form-control" id="city" name="city" type="text" placeholder="">
+              <small class="offset-3 text-danger" [class.d-none]="!city.invalid || !city.touched" >City is required</small>
+            </div>
+            <div class="row">
+              <label class="col-3" for="state">State</label>
+              <select [class.is-invalid]="state.invalid && state.touched" formControlName="state" class="col form-select" id="state" name="country">
+                <option selected="" value="dummy">Select State</option>
+                <option *ngFor="let st of allStates" value="{{st}}">{{st}}</option>
+              </select>
+              <small class="offset-3 text-danger" [class.d-none]="!state.invalid || !state.touched" >State is required</small>
+            </div>
+            <div class="row">
+              <label class="col-3" for="zipCode">Zip Code</label>
+              <input [class.is-invalid]="zipCode.invalid && zipCode.touched" formControlName="zipCode" class="col form-control" id="zipCode" name="zipCode" type="text" placeholder="">
+              <small class="offset-3 text-danger" [class.d-none]="!zipCode.invalid || !zipCode.touched" >Zip Code is required</small>
+            </div>
+            <div class="row">
+              <label class="col-3" for="country">Country</label>
+              <select [class.is-invalid]="country.invalid && country.touched" formControlName="country" class="col form-select" id="country" name="country">
+                <option selected="" value="dummy">Select Country</option>
+                <option *ngFor="let ctry of allCountries" value="{{ctry}}">{{ctry}}</option>
+              </select>
+              <small class="offset-3 text-danger" [class.d-none]="!country.invalid || !country.touched" >Country is required</small>
+            </div>
+          </div>
+          <button [disabled]="!userDetailsForm.valid" class="btn btn-ascent" type="submit">{{ isEditPage ? "Confirm Edit": "Register" }}</button>
+
+        </div>
+      </form>
+    </div>
+  </div>

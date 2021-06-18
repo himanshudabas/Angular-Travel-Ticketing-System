@@ -1,0 +1,65 @@
+
+<div class="container p-0">
+
+  <div class="row">
+    <h1 class="col h3 mb-3">Tickets</h1>
+    <h1 class="col h3 col-auto ms-auto">
+      <a [routerLink]="['/tickets/create']" class="btn btn-ascent float-right mt-n1"><i class="fas fa-plus"></i> New Ticket</a>
+    </h1>
+  </div>
+
+<!--    Each Card-->
+  <div class="row" >
+    <div *ngFor="let tkt of currTickets; let i = index" class="col-12 col-md-6 col-lg-4">
+      <div class="card">
+        <div class="card-header px-4 pt-4">
+          <div class="row pb-0">
+            <h5 class="col card-title mb-0">Ticket #{{tkt.id}}</h5>
+            <div class="col col-auto ms-auto badge {{tkt.ticketStatus | lowercase }} my-2">{{tkt.ticketStatus}}</div>
+          </div>
+        </div>
+        <div class="card-body px-4 pt-2">
+          <table>
+            <tr>
+              <td>Type:</td><td>{{tkt.type}}</td>
+            </tr>
+            <tr>
+              <td>Priority:</td><td>{{tkt.priority}}</td>
+            </tr>
+            <tr>
+              <td>Travel To:</td><td>{{tkt.travelTo}}</td>
+            </tr>
+          </table>
+          <p class="more-details">{{tkt.moreDetails}}</p>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item pb-4">
+                <p class="mb-2 font-weight-bold">Progress <span class="float-right">{{ currTicketsProgress[i] }}%</span></p>
+                <div class="progress progress-sm">
+                  <div class="progress-bar {{tkt.ticketStatus | lowercase }}" role="progressbar" aria-valuenow="{{ currTicketsProgress[i] }}" aria-valuemin=0 aria-valuemax="100" style="width: {{currTicketsProgress[i]}}%">
+                  </div>
+                </div>
+              </li>
+            </ul>
+        <button [routerLink]="['/tickets/', tkt.id]" class="btn btn-outline-success">View</button>
+        <button [routerLink]="['/tickets/edit/', tkt.id] " class="btn btn-ascent">Edit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+<!--  Each Card  END-->
+</div>
+
+
+<!--           paginator-->
+          <div class="col-12">
+            <div class="pagination justify-content-center">
+              <mat-paginator
+
+                [length]="totalTickets"
+                [hidePageSize]="true"
+                [pageSizeOptions]="[5]"
+                (page)="onChangePage($event)">
+              </mat-paginator>
+            </div>
+          </div>
+<!--          paginator end-->

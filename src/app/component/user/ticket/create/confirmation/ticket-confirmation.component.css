@@ -1,0 +1,19 @@
+
+table tbody tr td:first-child {
+  color: #bb86fc;
+  text-align:right;
+  white-space: nowrap;
+}
+table tbody tr td:not(:first-child) {
+  width: 100%;
+}
+
+td {
+  color: white;
+  width:auto;
+}
+
+table{
+  width:100%;
+}
+

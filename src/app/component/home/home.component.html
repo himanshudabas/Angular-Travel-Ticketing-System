@@ -1,0 +1,28 @@
+
+
+<div class="row">
+  <div class="col-12 my-dest text-center mb-3">Select Destination</div>
+  <div class="col-12 text-center">
+    <mat-form-field *ngIf="showSearchBox" class="col-sm-8 col-12 col-lg-6 col-md-6">
+      <mat-label>Choose Destination</mat-label>
+      <input type="text"
+             placeholder="Country"
+             aria-label="Choose Destination"
+             matInput
+             [formControl]="myControl"
+             [matAutocomplete]="auto">
+      <mat-autocomplete [displayWith]="displayFn.bind(this)" #auto="matAutocomplete">
+        <mat-option *ngFor="let option of filteredOptions | async" [value]="option.value">
+          {{option.name}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+  </div>
+</div>
+
+<div *ngIf="showChart">
+  <div id="chart-container">
+    <canvas #myCanvas id="canvas" baseChart [chartType]="chartType" [datasets]="chartData" [labels]="chartLabels" [colors]="chartColors" [options]="chartOptions"></canvas>
+  </div>
+</div>
+

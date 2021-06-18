@@ -1,0 +1,94 @@
+
+<div class="container p-0">
+
+  <div class="row">
+    <!-- Sort type select menu -->
+    <mat-form-field appearance="fill" class="col">
+      <mat-label>SORT BY</mat-label>
+      <mat-select (selectionChange)="onSortChange()" [(value)]="activeSortType" >
+        <mat-option *ngFor="let sortType of sortByList" [value]="sortType.value">{{sortType.name}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <!-- Sort type select menu END -->
+
+    <!-- Filter type select menu -->
+    <mat-form-field appearance="fill" class="col">
+      <mat-label>FILTER TYPE</mat-label>
+      <mat-select (selectionChange)="onFilterTypeChange($event)" [(value)]="activeFilterType" >
+        <mat-option>None</mat-option>
+        <mat-option *ngFor="let filterType of filterTypeList" [value]="filterType.value">{{filterType.name}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <!-- Filter type select menu END -->
+
+    <!-- Filter value select menu -->
+    <mat-form-field *ngIf="isFilterValueVisible" appearance="fill" class="col">
+      <mat-label>{{activeFilterTypeDisplayName}}</mat-label>
+      <mat-select (selectionChange)="onFilterValueChange()" [(value)]="activeFilterValue" >
+        <mat-option *ngFor="let filterValue of filterValueList" [value]="filterValue.value">{{filterValue.name}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <!-- Filter value select menu END -->
+  </div>
+
+  <div class="row">
+    <h1 class="text-center col mx-auto h3 mb-3">All Tickets</h1>
+  </div>
+
+  <!--    Each Card-->
+  <div *ngIf="showTicketsBool" class="row" >
+    <div *ngFor="let tkt of visibleTickets; let i = index" class="col-12 col-md-6 col-lg-4">
+      <div class="card">
+        <div class="card-header px-4 pt-4">
+          <div class="row pb-0">
+            <h5 class="col card-title mb-0">Ticket #{{tkt.id}}</h5>
+            <div class="col col-auto ms-auto badge {{tkt.ticketStatus | lowercase }} my-2">{{tkt.ticketStatus}}</div>
+          </div>
+        </div>
+        <div class="card-body px-4 pt-2">
+          <table>
+            <tr>
+              <td>Date:</td><td>{{tkt.submitDate | date}}</td>
+            </tr>
+            <tr>
+              <td>Type:</td><td>{{tkt.type}}</td>
+            </tr>
+            <tr>
+              <td>Priority:</td><td>{{tkt.priority}}</td>
+            </tr>
+            <tr>
+              <td>Travel To:</td><td>{{tkt.travelTo}}</td>
+            </tr>
+          </table>
+          <p class="more-details">{{tkt.moreDetails}}</p>
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item pb-4">
+              <p class="mb-2 font-weight-bold">Progress <span class="float-right">{{ visibleTicketsProgressList[i] }}%</span></p>
+              <div class="progress progress-sm">
+                <div class="progress-bar {{tkt.ticketStatus | lowercase }}" role="progressbar" aria-valuenow="{{ visibleTicketsProgressList[i] }}" aria-valuemin=0 aria-valuemax="100" style="width: {{visibleTicketsProgressList[i]}}%">
+                </div>
+              </div>
+            </li>
+          </ul>
+          <button [routerLink]="['/admin/tickets/', tkt.id]" class="btn btn-outline-success">View</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!--  Each Card  END-->
+</div>
+
+
+<!--           paginator-->
+<div class="col-12">
+  <div class="pagination justify-content-center">
+    <mat-paginator
+
+      [length]="totalTickets"
+      [hidePageSize]="true"
+      [pageSizeOptions]="[5]"
+      (page)="onChangePage($event)">
+    </mat-paginator>
+  </div>
+</div>
+<!--          paginator end-->

@@ -1,0 +1,77 @@
+<div class="horizontal-rule print-area-head">
+  <h2>{{ isEditPage ? "Edit": "" }} Ticket: confirmation</h2>
+</div>
+<div class="horizontal-rule print-area-head">
+  <h6>Thank you for submitting the Ticket.</h6>
+</div>
+<div *ngIf="ticket" class="container">
+  <div class="row">
+    <div class="card col-lg-8 col-md-9 col-sm-12">
+      <table id="registration-detail-table" class="print-area card-body table table-borderless">
+        <tbody>
+        <tr>
+          <td>Ticket Type:</td>
+          <td>{{ticket.type}}</td>
+        </tr>
+        <tr>
+          <td>Priority:</td>
+          <td>{{ticket.priority}}</td>
+        </tr>
+        <tr>
+          <td>Travel To:</td>
+          <td>{{ticket.travelTo}}</td>
+        </tr>
+        <tr>
+          <td>Travel From:</td>
+          <td>{{ticket.travelFrom}}</td>
+        </tr>
+        <tr>
+          <td>Travel Start:</td>
+          <td>{{ticket.startDate | date}}</td>
+        </tr>
+        <tr>
+          <td>Travel End:</td>
+          <td>{{ticket.endDate | date}}</td>
+        </tr>
+        <tr>
+          <td>Passport Number:</td>
+          <td>{{ticket.passportNumber}}</td>
+        </tr>
+        <tr>
+          <td>Project Name:</td>
+          <td>{{ticket.projectName}}</td>
+        </tr>
+        <tr>
+          <td>Expense Borne By:</td>
+          <td>{{ticket.borneBy}}</td>
+        </tr>
+        <tr *ngIf="ticket.approverName != '' && ticket.approverName != null">
+          <td>Travel Approver Name:</td>
+          <td>{{ticket.approverName}}</td>
+        </tr>
+        <tr *ngIf="ticket.expectedDuration != '' && ticket.expectedDuration != null">
+          <td>Expected Travel Duration:</td>
+          <td>{{ticket.expectedDuration}}</td>
+        </tr>
+        <tr *ngIf="ticket.maxAllowedAmount != '' && ticket.maxAllowedAmount != null">
+          <td>Max Allowed Amount:</td>
+          <td>{{ticket.maxAllowedAmount}}</td>
+        </tr>
+        <tr>
+          <td>More Details:</td>
+          <td>{{ticket.moreDetails}}</td>
+        </tr>
+        </tbody>
+      </table>
+      <div class="container">
+        <div class="row">
+          <button (click)="printTicket()" class="btn col-md-3 mb-1 mb-sm-1 me-md-auto col-sm-6 btn-outline-success">Print</button>
+          <button (click)="editTicket()" class="btn col-md-3 mb-1 mb-sm-1 me-md-auto col-sm-6  btn-ascent">Edit</button>
+          <button (click)="confirmTicket()" class="btn mt-sm-2 mt-md-0 col-md-5 btn-ascent">Return to homepage</button>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>

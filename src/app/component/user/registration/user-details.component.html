@@ -1,0 +1,4 @@
+<app-register *ngIf="!showConfirmation" [user]="userData" [isEditPage]="isEditPage" (submitEvent)="confirm($event)"></app-register>
+<app-confirmation (editDetailsEvent)="showEditPage()" [isEditPage]="isEditPage" [user]="userData" *ngIf="showConfirmation"></app-confirmation>
+
+

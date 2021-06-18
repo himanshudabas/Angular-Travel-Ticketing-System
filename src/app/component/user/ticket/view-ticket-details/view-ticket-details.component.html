@@ -1,0 +1,108 @@
+<div *ngIf="ticket" class="row horizontal-rule print-area-head">
+  <div class="col">
+    <h2>Ticket #{{ticket.id}}</h2>
+    <h6>Ticket details</h6>
+  </div>
+  <div class="col-auto border-1">
+    <p class="ascent-color mb-1">Date: <span class="text-white">{{ticket.submitDate | date }} </span></p>
+    <p class="ascent-color mb-1">Status: <span class="text-white">{{ticket.ticketStatus }}</span> </p>
+  </div>
+</div>
+<div *ngIf="ticket" class="container">
+  <div class="row">
+    <div class="card ms-lg-auto me-lg-auto col-lg-7 col-md-12 col-sm-12">
+      <table id="registration-detail-table" class="print-area card-body table table-borderless">
+        <tbody>
+        <tr>
+          <td>Ticket Type:</td>
+          <td>{{ticket.type}}</td>
+        </tr>
+        <tr>
+          <td>Priority:</td>
+          <td>{{ticket.priority}}</td>
+        </tr>
+        <tr>
+          <td>Travel To:</td>
+          <td>{{ticket.travelTo}}</td>
+        </tr>
+        <tr>
+          <td>Travel From:</td>
+          <td>{{ticket.travelFrom}}</td>
+        </tr>
+        <tr>
+          <td>Travel Start:</td>
+          <td>{{ticket.startDate | date}}</td>
+        </tr>
+        <tr>
+          <td>Travel End:</td>
+          <td>{{ticket.endDate | date}}</td>
+        </tr>
+        <tr>
+          <td>Passport Number:</td>
+          <td>{{ticket.passportNumber}}</td>
+        </tr>
+        <tr>
+          <td>Project Name:</td>
+          <td>{{ticket.projectName}}</td>
+        </tr>
+        <tr>
+          <td>Expense Borne By:</td>
+          <td>{{ticket.borneBy}}</td>
+        </tr>
+        <tr *ngIf="ticket.approverName != '' && ticket.approverName != null">
+          <td>Travel Approver Name:</td>
+          <td>{{ticket.approverName}}</td>
+        </tr>
+        <tr *ngIf="ticket.expectedDuration != '' && ticket.expectedDuration != null">
+          <td>Expected Travel Duration:</td>
+          <td>{{ticket.expectedDuration}}</td>
+        </tr>
+        <tr *ngIf="ticket.maxAllowedAmount != '' && ticket.maxAllowedAmount != null">
+          <td>Max Allowed Amount:</td>
+          <td>{{ticket.maxAllowedAmount}}</td>
+        </tr>
+        <tr>
+          <td>More Details:</td>
+          <td>{{ticket.moreDetails}}</td>
+        </tr>
+        </tbody>
+      </table>
+      <div class="container">
+        <div class="row">
+          <button (click)="printTicket()" class="btn col-md-3 mb-1 mb-sm-1 me-md-auto btn-outline-success">Print</button>
+          <button [routerLink]="['/tickets']" class="btn mt-sm-2 mt-md-0 col-md-5 btn-ascent">Return to tickets page</button>
+        </div>
+      </div>
+
+    </div>
+    <!--    Ticket Response -->
+    <div *ngIf="ticketResolveInfo" class="ms-lg-2 ms-lg-auto me-lg-auto card col-lg-4 col-md-12 mt-3 mt-lg-0 ms-0 col-sm-12 col-auto">
+      <div class="align-middle card-header py-3">
+        <div class="text-center row pb-0">
+          <h5 class="col card-title mb-0">Response</h5>
+          <div class="col col-auto ms-auto badge my-2"></div>
+        </div>
+      </div>
+      <table id="resolve-info" class="card-body table table-borderless">
+        <tbody>
+        <tr>
+          <td>Status:</td>
+          <td>{{ticket.ticketStatus}}</td>
+        </tr>
+        <tr>
+          <td>Admin:</td>
+          <td>{{ticketResolveInfo.adminName}}</td>
+        </tr>
+        <tr>
+          <td>Comment:</td>
+          <td>{{ticketResolveInfo.comment}}</td>
+        </tr>
+        <tr *ngFor="let doc of ticketResolveInfo.documents; let i = index">
+          <td>File #{{i+1}}:</td>
+          <a class="custom-link" (click)="getDocument(doc.id, doc.name + '.' + doc.type)" >{{doc.name + "." + doc.type}}</a>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
