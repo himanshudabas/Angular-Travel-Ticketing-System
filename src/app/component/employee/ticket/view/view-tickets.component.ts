@@ -21,7 +21,7 @@ export class ViewTicketsComponent implements OnInit, OnDestroy {
   public currTickets: Array<Ticket>;
   private subscriptions: Subscription[] = [];
   private currPageIdx = 0;
-  private currPageSize = 5;
+  public currPageSize = 6;
 
   constructor(
     private ticketService: TicketService,

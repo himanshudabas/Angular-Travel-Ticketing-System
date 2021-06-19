@@ -30,7 +30,7 @@ export class AdminViewTicketsComponent implements OnInit, OnDestroy {
   public visibleTickets: Array<Ticket>;
   private subscriptions: Subscription[] = [];
   private activePaginationIdx = 0;
-  private activePaginationPageSize = 5;
+  public activePaginationPageSize = 6;
   public filterTypeList: { name: any; value: string }[];
   public sortByList: { name: any; value: string }[];
   public filterValueList: { name: any; value: string }[];
